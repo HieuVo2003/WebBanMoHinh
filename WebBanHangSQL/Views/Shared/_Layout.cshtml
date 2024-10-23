@@ -1,0 +1,338 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Website Mô Hình</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebMoHinh.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="~/css/SearchResultCate.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header>
+        <script type="text/javascript" src="https://cdn.fchat.vn/assets/embed/webchat.js?id=66613900816ae51fae6b3229" async="async"></script>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 nav-background">
+                <div class="container-fluid ">
+                    <div class="navbar navbar-inverse navbar-fixed-top">
+                        <div class="container">
+                            <div class="navbar-header">
+                                <a class="navbar-brand" href="@Url.Action("Index", "Home")">
+                                    <img src="~/images/logo.jpg" alt="Logo" class="logo">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a href="@Url.Action("Index", "Home")" class="nav-link">Trang Chủ</a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#">Figure</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="1">One Piece</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="2">My Hero Academia</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="3">Genshin Impact</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" href="#">Gundam</a>
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="4">Gundam HG</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="5">Gundam RG</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="SearchResultCate" asp-route-categoryId="6">Gundam MG</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-area="" asp-controller="Product" asp-action="Index">Quản Lý Sản Phẩm</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-area="" asp-controller="Categories" asp-action="Index">Quản Lý Thể Loại</a>
+                                </li>
+                            }
+
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-area="" asp-controller="Orders" asp-action="UserOrders">Xem Đơn Hàng Đã Đặt</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link " asp-area="" asp-controller="Orders" asp-action="Index">Quản Lý Đơn Hàng</a>
+                                </li>
+                            }
+                        </ul>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <button class="btn btn-outline-dark btn-cart" type="submit">
+                                <a class="nav-link " asp-area="" asp-controller="ShoppingCart" asp-action="Index">
+                                    <i class="bi bi-cart-fill me-1"></i>
+                                    <span>Cart</span>
+                                </a>
+                            </button>
+                        }
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </nav>
+
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+</body>
+<footer class="footer-wrapper">
+    <div id="footer" class="footer footer-1 show-ribbon">
+        <div class="footer-main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <!-- Chia thành 2 cột bằng lưới Bootstrap -->
+                        <aside id="contact-info-widget-2" class="widget contact-info">
+                            <h3 class="widget-title">Thông Tin Liên Hệ</h3>
+                            <div class="contact-info contact-info-block">
+                                <ul class="contact-details list list-icons">
+                                    <li>
+                                        <i class="far fa-dot-circle"></i>
+                                        <strong>Địa Chỉ:</strong>
+                                        <span>xxx/xx/xx, Trần Xuân Soạn, phường Tân Hưng, quận 7, TP.HCM</span>
+                                    </li>
+                                    <li>
+                                        <i class="fab fa-whatsapp"></i>
+                                        <strong>Zalo (vui lòng nhắn tin):</strong>
+                                        <span>0901xxxxxx</span>
+                                    </li>
+
+                                    <li>
+                                        <i class="far fa-envelope"></i>
+                                        <strong>Email:</strong>
+                                        <span><a href="mailto:phamdophuc12345@gmail.com">phamdophuc12345@gmail.com</a></span>
+                                    </li>
+                                    <li>
+                                        <i class="far fa-clock"></i>
+                                        <strong>Thời gian làm việc:</strong>
+                                        <span>Tất cả các ngày trong tuần / 9:00 AM - 5:00 PM</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+</html>>
+<style>
+    .footer {
+        background-color: #333;
+        color: #fff;
+        padding: 1px 0; /* Giảm khoảng cách lề trên và dưới thêm 30% */
+    }
+
+        .footer a {
+            color: #fff;
+        }
+
+            .footer a:hover {
+                color: #ddd;
+            }
+
+        .footer .widget-title {
+            font-size: px; /* Giảm kích thước tiêu đề thêm 30% */
+            margin-bottom: 2px; /* Giảm khoảng cách dưới tiêu đề */
+        }
+
+        .footer .contact-details {
+            list-style: none;
+            padding: 0;
+            margin: 0; /* Xóa khoảng cách giữa các mục */
+        }
+
+            .footer .contact-details li {
+                margin-bottom: 1px; /* Giảm khoảng cách giữa các mục */
+            }
+
+                .footer .contact-details li i {
+                    margin-right: 2px; /* Giảm khoảng cách giữa biểu tượng và nội dung */
+                }
+
+
+   
+    /*//////////////////////////////////////////////*/
+
+    .user-info {
+        background-color: #f0f0f0;
+        padding: 20px;
+        position: fixed;
+        bottom: 200px;
+        right: 0;
+        width: 7%;
+        z-index: 999; /* Đảm bảo thanh thông tin hiển thị trên tất cả các phần tử khác */
+        border: 2px solid #000; /* Màu và độ dày của khung viền */
+        border-radius: 40px; /* Độ cong của các góc */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng bóng mờ (tuỳ chọn) */
+    }
+
+    .user-info {
+        background-color: #f0f0f0;
+        padding: 50px;
+        border-radius: 5px;
+    }
+
+        .user-info img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+        }
+
+        .user-info .social-link {
+            margin-right: 30px;
+        }
+
+
+
+
+    .navbar-brand img {
+        max-height: 170px; /* Điều chỉnh kích thước logo */
+    }
+
+    .navbar-nav {
+        list-style-type: none; /* Loại bỏ dấu chấm */
+        margin: 0;
+        padding: 0;
+        display: flex; /* Sắp xếp các mục theo chiều ngang */
+    }
+
+    .nav-item {
+        font-size: 40px;
+        margin-left: 30px; /* Khoảng cách giữa các mục */
+    }
+
+    .nav-link {
+        color: #000000; /* Màu chữ */
+        text-decoration: none; /* Loại bỏ gạch chân */
+        font-weight: bold; /* Đậm */
+    }
+
+        .nav-link:hover {
+            color: #888888; /* Màu chữ khi di chuột qua */
+        }
+
+    .user-info {
+        margin-top: 10px; /* Khoảng cách giữa navbar và phần thông tin người dùng */
+    }
+
+    .social-link {
+        color: #000000; /* Màu biểu tượng mạng xã hội */
+        margin-right: 10px; /* Khoảng cách giữa các biểu tượng */
+    }
+
+        .social-link:hover {
+            color: #888888; /* Màu biểu tượng mạng xã hội khi di chuột qua */
+        }
+
+
+    /*sổ thanh thể loại/////////////////
+    */
+    li {
+        list-style: none;
+    }
+
+    a {
+        text-decoration: none;
+        color: #000;
+    }
+
+    .navbar .sub-menu {
+        position: absolute;
+        background-color: #fff;
+        border: solid #ccc;
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.3s linear;
+        top: 100%;
+        left: 0;
+        margin-top: 0;
+        z-index: 1000;
+    }
+
+    .nav-item:hover .sub-menu {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .navbar .sub-menu .dropdown-item {
+        font-size: 20px;
+        font-weight: normal;
+        color: #000;
+    }
+
+        .navbar .sub-menu .dropdown-item:hover {
+            color: #ccc;
+        }
+    /*/////////////////////////////////////////////////////*/
+
+</style>
+<script>
+    let slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        let slides = document.querySelectorAll('.aspect-ratio-169 img');
+        let dots = document.querySelectorAll('.dot');
+        for (let i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) { slideIndex = 1 }
+        for (let i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        setTimeout(showSlides, 6000); // Thay đổi slide sau mỗi 6 giây
+    }
+
+    function currentSlide(n) {
+        slideIndex = n;
+        showSlides();
+    }
+</script>

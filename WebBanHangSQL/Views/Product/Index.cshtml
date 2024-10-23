@@ -1,0 +1,84 @@
+﻿  @model IEnumerable<WebMoHinh.Models.Product>
+
+@{
+    ViewData["Title"] = "Mô Hình";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+<h1 class="text-center mb-4">Trang Sản Phẩm</h1>
+<table class="table">
+    @if (User.IsInRole("Admin"))
+    {
+        <a asp-action="Add" class="btn bg-success text-white">Thêm Sản Phẩm</a>
+    }
+
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Mô tả</th>
+            <th>Hình Ảnh</th>
+            <th>Loại sản phẩm</th>
+            @if (User.IsInRole("Admin"))
+            {
+                <th>Actions</th>
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.Price.ToString("#,##0.00")0 VNĐ</td>
+                <td>@product.Description</td>
+                <td><img src="@product.ImageUrl" width="50" height="auto"></td>
+                <td>@product.Category.CategoryName </td>
+                @if (User.IsInRole("Admin"))
+                {
+                    <td>
+                        <div class="action-buttons">
+                            <a asp-action="Display" asp-route-id="@product.Id" class="action-button detail-button">Chi Tiết</a>
+                            <a asp-action="Update" asp-route-id="@product.Id" class="action-button edit-button">chỉnh Sửa</a>
+                            <a asp-action="Delete" asp-route-id="@product.Id" class="action-button delete-button">Xóa</a>
+                        </div>
+                    </td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+<style>
+
+    .action-button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 5px 10px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        transition: background-color 0.3s ease;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+   
+    }
+
+        .action-button:hover {
+            background-color: #F5D7DB;
+            color: #F1916d;
+            font-weight: bold;
+        }
+
+    .detail-button {
+        background-color: #28a745;
+    }
+
+    .edit-button {
+        background-color: #ffc107;
+    }
+
+    .delete-button {
+        background-color: #dc3545;
+    }
+</style>

@@ -1,0 +1,49 @@
+﻿@model Order
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/Checkout.css">
+<div class="container">
+    <div class="header">
+    </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="mb-0 text-center" id="changing-color">Thanh Toán</h2>
+            <form asp-action="Checkout" method="post">
+
+                <div class="form-group">
+                    <label for="shippingAddress">Địa Chỉ Nhận Hàng: </label>
+                    <input id="shippingAddress" asp-for="ShippingAddress" class="form-control" placeholder="803/23/17/6 Huỳnh Tấn Phát Q.7 TP.HCM" required />
+                </div>
+                <div class="form-group">
+                    <label for="notes">Ghi Chú Cho Đơn Hàng: </label>
+                    <textarea id="notes" asp-for="Notes" class="form-control" placeholder="Giao nhanh giúp em" rows="4"></textarea>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">Đặt Hàng</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    var inputElement = document.getElementById("shippingAddress");
+    var exampleValue = inputElement.placeholder;
+
+    inputElement.addEventListener("focus", function () {
+        // Nếu giá trị hiện tại của ô nhập là ví dụ, xóa nó đi
+        if (this.value === exampleValue) {
+            this.value = "";
+        }
+    });
+
+    // Sự kiện khi người dùng rời khỏi ô nhập
+    inputElement.addEventListener("blur", function () {
+        // Nếu ô nhập trống, đặt lại giá trị là ví dụ
+        if (this.value === "") {
+            this.value = exampleValue;
+        }
+    });
+</script>

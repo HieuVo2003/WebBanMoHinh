@@ -1,0 +1,136 @@
+﻿@model IEnumerable<WebMoHinh.Models.Category>
+
+@{
+    ViewData["Title"] = "Thể Loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>ID</th>
+            <th>Loại Mô Hình</th>
+            <th>Hành Động</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var category in Model)
+        {
+            <tr class="category-item" data-category-id="@category.CategoryId">
+                <td>@category.CategoryId</td>
+                <td>@category.CategoryName</td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="#" class="action-button delete-button" onclick="confirmDelete(@category.CategoryId)">Xóa</a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    if (User.IsInRole("Admin")) 
+    {
+        <a asp-action="Add" class="btn-add">Thêm Thể Loại</a>
+    }
+}
+<style>
+    .table th:nth-child(1),
+    .table td:nth-child(2) {
+        
+    }
+    /* CSS cho nút Thêm Thể Loại */
+    .btn-add {
+        display: inline-block;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        color: #fff;
+        background-color: #28a745;
+        transition: background-color 0.3s ease;
+        
+    }
+
+        .btn-add:hover {
+            background-color: #218838;
+        }
+
+    /* CSS cho bảng */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+        font-weight: bold;
+      
+    }
+
+        .table th,
+        .table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .table th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+
+    .action-button {
+        display: inline-block;
+        padding: 8px 16px;
+        border: 2px solid transparent;
+        border-radius: 4px;
+        font-size: 14px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+
+    .delete-button {
+        background-color: #e74c3c;
+        color: #fff;
+    }
+
+    .action-button:hover {
+        border-color: #34495e; /* Màu sắc khi hover */
+        color: #34495e; /* Màu sắc chữ khi hover */
+    }
+
+    .view-books-button {
+        background-color: #ffc107;
+        color: #212529;
+    }
+
+        .view-books-button:hover {
+            background-color: #ffcd39;
+            color: #212529;
+        }
+
+</style>
+@* <script>
+    function confirmDelete(CategoryId) {
+        // Kiểm tra quyền của người dùng
+        if (@User.IsInRole("Admin").ToString().ToLower() === 'true') {
+            if (confirm("Bạn có chắc chắn muốn xóa?")) {
+                alert("Bạn đang dùng quyền admin cho hoạt động xóa dữ liệu. Đây là hành động NGUY HIỂM và KHÔNG THỂ KHÔI PHỤC Hãy cân nhắc kỹ!");
+                if (confirm("Bạn vẫn muốn tiếp tục xóa?")) {
+                    window.location.href = "/Categories/DeleteConfirmed?id=" + CategoryId;
+                } else {
+                    window.location.href = "/Categories";
+                }
+            } else {
+                window.location.href = "/Categories";
+            }
+        } else {
+            alert("Bạn không đủ quyền hạn để xóa mục này!");
+            window.location.href = "/Categories";
+        }
+    }
+</script> *@

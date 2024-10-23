@@ -1,0 +1,71 @@
+﻿@model List<WebMoHinh.Models.Product>
+
+@{
+    ViewData["Title"] = "Thể Loại";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css"/>
+@if (@ViewBag.Category == 1)
+{
+    <h2><strong>One Piece</strong></h2>
+}
+else if (@ViewBag.Category == 2)
+{
+    <h1><strong>My Hero Academia</strong></h1>
+}
+else if (@ViewBag.Category == 3)
+{
+    <h1><strong>Genshin Impact</strong></h1>
+}
+else if (@ViewBag.Category == 4)
+{
+    <h1> <strong>Gundam HG</strong></h1>
+}
+else if (@ViewBag.Category == 5)
+{
+    <h1> <strong>Gundam RG</strong></h1>
+}
+else if (@ViewBag.Category == 6)
+{
+    <h1><strong>Gundam MG</strong></h1>
+}
+else
+{
+    <h1><strong>@ViewBag.Name</strong></h1>
+}
+
+<div class="container">
+    @if (Model.Any())
+    {
+        <div class="row row-cols-1 row-cols-md-5 g-4">
+            @foreach (var product in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 product-card">
+                        <img src="@product.ImageUrl" class="card-img-top book-image" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price-buttons d-flex justify-content-between align-items-center">
+                                <div class="price price-changing-color">
+                                    <p class="mb-0">Giá: @product.Price.ToString("#,##0").000 Vnđ</p>
+                                </div>
+                                <div class="buttons">
+                                    <a href="@Url.Action("Display", "Product", new { id = product.Id })" class="btn btn-primary btn-view-details">Chi tiết</a>
+                                    <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@product.Id" asp-route-quantity="1" class="btn btn-dark btn-add-to-cart">
+                                        <i class="bi-cart-fill me-1"></i> Thêm vào giỏ
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p>Không tìm thấy kết quả nào.</p>
+    }
+</div>

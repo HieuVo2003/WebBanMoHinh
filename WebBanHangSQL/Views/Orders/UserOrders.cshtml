@@ -1,0 +1,38 @@
+﻿@model List<WebMoHinh.Models.Order>
+<link rel="stylesheet" href="~/css/site.css"/>
+<h1 class="text-center mb-4">Các đơn hàng đã đặt</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-center">Ngày Đặt Hàng</th>
+                <th class="text-center">Tổng Trị Giá</th>
+                <th class="text-center">Tình trạng</th>
+                <th class="text-center">Hành động</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td class="text-center">@order.OrderDate.ToShortDateString()</td>
+                    <td class="text-center">@order.TotalPrice.ToString("")0 VNĐ</td>
+                    <td class="text-center">
+                    <i class="fas fa-clock"></i> Chờ xác nhận
+                    </td>
+                    <td class="text-center">
+                        <!-- Cột hành động -->
+                        <form method="post" action="@Url.Action("ConfirmUserDeleteOrder", "Orders")">
+                            <input type="hidden" name="orderId" value="@order.Id" />
+                            <button type="submit" class="btn btn-danger">Xóa</button>
+                        </form>
+
+                    </td>
+               
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

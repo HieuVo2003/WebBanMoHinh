@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Display";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model WebMoHinh.Models.Product
+
+<div class="container">
+    <h1 class="text-center">@Model.Name</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Product Image" class="img-fluid" />
+            }
+        </div>
+        <div class="col-md-6">
+            <p class="lead"><span class="price">@Model.Price.ToString("#,##0.00")0 VNĐ</span></p>
+            <p class="italic-text">@Model.Description</p>
+            <p class="category">Thể Loại: @Model.Category.CategoryName</p>
+            @if (User.IsInRole("Admin"))
+            {
+                <a class="btn btn-success btn-lg btn-block mt-3" asp-action="Update" asp-route-id="@Model.Id">chỉnh Sửa</a>
+            }
+            <a class="btn btn-dark btn-lg btn-block mt-3" asp-controller="Home" asp-action="Index">Quay Về</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .italic-text {
+        font-style: italic;
+        text-align: justify;
+
+    }
+
+    .price {
+        color: #007bff;
+        font-size: 1.2em;
+        font-weight: bold;
+    }
+
+    .category {
+        font-style: italic;
+        margin-top: 10px;
+
+    }
+
+    .image-container {
+        display: flex;
+        justify-content: flex-end;
+        max-width: 100px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+</style>

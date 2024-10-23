@@ -1,0 +1,37 @@
+﻿@model List<WebMoHinh.Models.Product>
+
+@{
+    ViewData["Title"] = "Kết quả tìm kiếm";
+}
+<link rel="stylesheet" href="~/css/SearchResult.css">
+
+<div class="container">
+    <h2>Kết quả tìm kiếm cho: @ViewBag.Query</h2>
+
+    <div class="row row-cols-1 row-cols-md-5 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100 product-card">
+                    <img src="@item.ImageUrl" class="card-img-top book-image" alt="@item.Name">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Name</h5>
+                    </div>
+                    <div class="card-footer">
+                        <div class="price-buttons d-flex justify-content-between align-items-center">
+                            <div class="price price-changing-color">
+                                <p class="mb-0">Giá: @item.Price.ToString("#,##0").000 Vnđ</p>
+                            </div>
+                            <div class="buttons">
+                                <a href="@Url.Action("Display", "Product", new { id = item.Id })" class="btn btn-primary btn-view-details">Chi tiết</a>
+                                <a asp-controller="ShoppingCart" asp-action="AddToCart" asp-route-productId="@item.Id" asp-route-quantity="1" class="btn btn-dark btn-add-to-cart">
+                                    <i class="bi-cart-fill me-1"></i> Thêm vào giỏ
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
